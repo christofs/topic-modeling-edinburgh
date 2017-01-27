@@ -725,7 +725,7 @@ cd C:\Programs\mallet-2.0.8
 (using the `cmd` Terminal; from `C:\Programs\mallet-2.0.8\`)
 ```
 bin\mallet import-dir 
---input C:\Users\[USER]\Desktop\press\1-input 
+--input C:\Users\[USER]\Desktop\press\1-texts 
 --output C:\Users\[USER]\Desktop\press\2-mallet\press.mallet 
 --keep-sequence 
 --remove-stopwords TRUE 
@@ -826,8 +826,9 @@ bin\mallet train-topics
 <script type="text/template">
 ## Exercise 2: Adapt the commands
 * At your choice, do *one* of the following 
-    * Activate or deactivate, or modify, the stopwords list (on import)
-    * Use a larger or smaller number of topics
+    * Deactivate or modify the stopword list (on import)
+    * Use the `1-prepd` files (on import)
+    * Use a different number of topics
     * Perform fewer or more iterations
     * Display more or less topic words
     * Add the parameter `--optimize-interval 10` to your modeling command
