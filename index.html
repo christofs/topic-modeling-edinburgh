@@ -611,12 +611,31 @@ can be generated. To make a new document, one chooses a distribution over topics
 
 <section data-markdown>
 <script type="text/template">
+## (b) Getting started
+</script>
+</section>
+
+
+<section data-markdown>
+<script type="text/template">
+## Some useful links
+* This section of the slides: <br/>https://christofs.github.io/topic-modeling-edinburgh/#/4/5 
+* The dataset (Hong Kong Universities' Press Releases): <br/>[DROPBOX LINK]
+* The MALLET Topic Modeling page: <br/>http://mallet.cs.umass.edu/topics.php
+</script>
+</section>
+
+
+
+<section data-markdown>
+<script type="text/template">
 ## Mallet: prerequisites
-* Mallet 2.0.8 is installed (in `/home/[USER]/Programs/Mallet` on Linux or in `C:\Programs\Mallet` on Windows) 
-* A working directory (here: on the Desktop), with: 
-   * An input data folder: texts in plain text, one file per text
-   * Optionally: a plain text file with stopwords
-   * Optionally: a dedicated output folder
+* Mallet 2.0.8 is installed
+    * in `/home/[USER]/Programs/mallet-2.0.8` on Linux
+    * or in `C:\Programs\mallet-2.0.8` on Windows
+* A working directory (here: on the Desktop), called "press-en/"
+* A simple text editor: Geany, Notepadd++, TextEdit 
+* Open text editor and create new file called "run-mallet.txt"
 </script>
 </section>
 
@@ -624,13 +643,13 @@ can be generated. To make a new document, one chooses a distribution over topics
 <section data-markdown>
 <script type="text/template">
 ## Testing Mallet
-(using the Linux Terminal; from anywhere on the system)
+(using the Linux Terminal; from "/home/[USER]")
 ```
 cd ~/Programs/mallet-2.0.8/
 ./bin/mallet
 ```
 <br/>
-(using the Windows CMD; from anywhere on the system)
+(using the Windows CMD; from "C:")
 ```
 cd C:\Programs\mallet-2.0.8
 .\bin\mallet
@@ -638,8 +657,6 @@ cd C:\Programs\mallet-2.0.8
 (List of commands should show up.)
 </script>
 </section>
-
-
 
 
 <section data-markdown>
@@ -650,6 +667,7 @@ cd C:\Programs\mallet-2.0.8
    * 2-mallet/
    * 3-derived
    * metadata.csv
+   * stopwords.txt
 </script>
 </section>
 
@@ -688,15 +706,15 @@ cd C:\Programs\mallet-2.0.8
 <section data-markdown>
 <script type="text/template">
 ## Importing texts into Mallet (Linux)
-(using the Terminal; from anywhere on the system)
+(using the Terminal; from "mallet-2.0.8" folder)
 ```
-/home/[USER]/Programs/Mallet/bin/mallet 
-import-dir 
---input /home/[USER]/Desktop/krakow-mallet/data/docs-all  
---output /home/[USER]/Desktop/krakow-mallet/data/docs-all.mallet
---keep-sequence  --token-regex '\p{L}[\p{L}\p{P}]*\p{L}' 
+./bin/mallet import-dir 
+--input ~/Desktop/press-en/1-texts/
+--output ~/Desktop/press-en/2-mallet/press-en.mallet
+--keep-sequence
+--token-regex '\p{L}[\p{L}\p{P}]*\p{L}' 
 --remove-stopwords TRUE
---stoplist-file /home/[USER]/Desktop/krakow-mallet/data/stopwords/doyle_100.txt
+--stoplist-file ~/Desktop/press-en/stopwords-en.txt
 ```
 </script>
 </section>
@@ -707,8 +725,7 @@ import-dir
 ## Importing texts into Mallet (Windows)
 (using the `cmd` Terminal; from `C:\Programs\mallet\`)
 ```
-bin\mallet 
-import-dir 
+bin\mallet import-dir 
 --input C:\Users\[USER]\Desktop\krakow-mallet\data\docs-all 
 --output C:\Users\[USER]\Desktop\krakow-mallet\data\docs-all.mallet 
 --keep-sequence 
@@ -727,7 +744,7 @@ import-dir
 * tell Mallet to do some modeling (`train-topics`)
 * ...where the corpus file is (`--input`)
 * ...how many topics to model (`--num-topics`)
-* ...in which interval to optimize internal parameters (`--optimize-interval`)
+* ...how to optimize internal parameters (`--optimize-interval`)
 * ...how many iterations to use (`--num-iterations`)
 * ...how many words to display per topic (`--num-topic-words`)
 * ...path for words-by-topics (`--output-topic-keys`)
@@ -739,15 +756,15 @@ import-dir
 <script type="text/template">
 ## (2) Build the topic model (Linux)
 ```
-/home/[USER]/Programs/Mallet/bin/mallet 
-train-topics  
---input /home/[USER]/Desktop/krakow-mallet/data/docs-all.mallet 
+~/Programs/mallet-2.0.8
+./bin/mallet train-topics  
+--input ~/Desktop/press-en/2-mallet/press-en.mallet 
 --num-topics 20 
 --optimize-interval 50 
---num-iterations 500 
+--num-iterations 100 
 --num-top-words 20 
---output-topic-keys /home/[USER]/Desktop/krakow-mallet/models/docs-all/topics-with-words.txt 
---output-doc-topics /home/[USER]/Desktop/krakow-mallet/models/docs-all/topics-in-texts.txt 
+--output-topic-keys ~/Desktop/press-en/2-mallet/topics-words.txt 
+--output-doc-topics ~/Desktop/press-en/2-mallet/docs-topics.txt 
 --doc-topics-max 20
 ```
 </script>
@@ -774,24 +791,24 @@ train-topics
 <section data-markdown>
 <script type="text/template">
 ## Inspecting the results
-* Open the `topics-with-words.txt` file with gedit or Notepad++ (or Calc/Excel; rename to CSV if necessary)
-* Open the `topics-in-texts.txt` file with gedit or Notepad++ (or Calc/Excel; rename to CSV if necessary)
+* Open the `topics-words.txt` file with text editor (or Calc/Excel)
+* Open the `docs-topics.txt` file with text editor (or Calc/Excel)
 </script>
 </section>
 
 
 <section data-markdown>
 <script type="text/template">
-## 3.3 Practice
+## (d) Practice
 </script>
 </section>
 
 <section data-markdown>
 <script type="text/template">
 ## Preparation
-* Open gedit / notepad++ and save a new file called "mallet-commands.txt"
+* Open "run-mallet.txt" in text editor
 * Find the Mallet installation folder on your computer and copy the path into your text file
-* Find the "krakow-mallet" folder on your computer and copy the path into your text file
+* Find the "press-en" folder on your computer and copy the path into your text file
 * Copy the generic `import` and `train-topic` commands from the presentation into your text file
 * Now you're all set!
 </script>
@@ -812,71 +829,34 @@ train-topics
 <script type="text/template">
 ## Exercise 2: Adapt the commands
 * At your choice, do *one* of the following 
-    * Use a collection that has been preprocessed differently (change output folder!)
-    * Activate or deactivate one of the stopwords list
+    * Activate or deactivate the stopwords list
     * Use a larger or smaller number of topics
     * Perform fewer or more iterations
     * Display more or less topic words
-* Make sure the output is written to a new folder / new filenames
+* Make sure the files are written to a new folder (e.g. "2-mallet_v2/")
 * Inspect the results and write down any changes you notice
 </script>
 </section>
-
-
-<section data-markdown>
-<script type="text/template">
-## Exercise 3: Increasing iterations
-* Use any collection of your choice
-* Make a series of runs with 1, 5, 25, 100 iterations 
-* Make sure the results are written to a new file each time
-* Inspect the series of results and write down any changes you notice
-</script>
-</section>
-
-
-<section data-markdown>
-<script type="text/template">
-## 3.4. Using tmw (demonstration)
-</script>
-</section>
-
-<section data-markdown>
-<script type="text/template">
-## tmw
-<img height="500" data-src="img/tm_tmw_en.png"></img>
-</script>
-</section>
-
-<section data-markdown>
-<script type="text/template">
-## twm has four submodules
-* prepare: Preprocessing of the texts
-* model: run Mallet to train the model
-* postprocess: transform and enrich Mallet output
-* visualize: create graphical views of the data
-</script>
-</section>
-
-<section data-markdown>
-<script type="text/template">
-## tmw: Mallet and Python
-* MALLET = Machine Learning for Language Toolkit, https://github.com/mimno/Mallet
-* Python = Programming Language, https://www.python.org/
-* tmw = Topic Modeling Workflow, in Python https://github.com/cligs/tmw
-* tmw = modular functions + configuration file
-* tmw uses numpy, pandas, seaborn, matplotlib, wordcloud, lxml, subprocess, etc. 
-</script>
-</section>
-
 
 </section>
 <section>
 
 <section data-markdown>
 <script type="text/template">
-# Conclusion</h2>
+# Discussion
 </script>
 </section>
+
+<section data-markdown>
+<script type="text/template">
+## Your questions and projects
+* What kind of projects / text collections do you have?
+* What kind of questions do you have?
+* What could topic modeling tell you?
+* What stops you from finding out?
+</script>
+</section>
+
 
 <section data-markdown>
 <script type="text/template">
