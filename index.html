@@ -722,7 +722,7 @@ cd C:\Programs\mallet-2.0.8
 <section data-markdown>
 <script type="text/template">
 ## Importing texts into Mallet (Windows)
-(using the `cmd` Terminal; from `C:\Programs\mallet\`)
+(using the `cmd` Terminal; from `C:\Programs\mallet-2.0.8\`)
 ```
 bin\mallet import-dir 
 --input C:\Users\[USER]\Desktop\press\1-input 
@@ -752,9 +752,8 @@ bin\mallet import-dir
 
 <section data-markdown>
 <script type="text/template">
-## (2) Build the topic model (Linux)
+## (2) Build the topic model (Linux; from "mallet-2.0.8/")
 ```
-~/Programs/mallet-2.0.8
 ./bin/mallet train-topics  
 --input ~/Desktop/press/2-mallet/press.mallet 
 --num-topics 20 
@@ -769,7 +768,7 @@ bin\mallet import-dir
 
 <section data-markdown>
 <script type="text/template">
-## (2) Build the topic model (Windows)
+## (2) Build the topic model (Windows; from `C:\Programs\mallet-2.0.8\`)
 ```
 bin\mallet train-topics 
 --input C:\\Users\[USER]\Desktop\press\2-mallet\press.mallet 
