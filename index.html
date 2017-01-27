@@ -698,8 +698,8 @@ cd C:\Programs\mallet-2.0.8
 * tell Mallet to import texts
 * ...where the text files are
 * ...where to save the corpus to
-* Optionally: ...how to tokenize the texts
-* Optionally: ...whether to use stopwords, and which stoplist to use
+* (optionally: ...how to tokenize the texts)
+* (optionally: ...whether to use stopwords, and which stoplist to use)
 </script>
 </section>
 
@@ -709,12 +709,11 @@ cd C:\Programs\mallet-2.0.8
 (using the Terminal; from "mallet-2.0.8" folder)
 ```
 ./bin/mallet import-dir 
---input ~/Desktop/press-en/1-texts/
---output ~/Desktop/press-en/2-mallet/press-en.mallet
+--input ~/Desktop/press/1-texts/
+--output ~/Desktop/press/2-mallet/press.mallet
 --keep-sequence
---token-regex '\p{L}[\p{L}\p{P}]*\p{L}' 
 --remove-stopwords TRUE
---stoplist-file ~/Desktop/press-en/stopwords-en.txt
+--stoplist-file ~/Desktop/press/stopwords.txt
 ```
 </script>
 </section>
@@ -726,11 +725,11 @@ cd C:\Programs\mallet-2.0.8
 (using the `cmd` Terminal; from `C:\Programs\mallet\`)
 ```
 bin\mallet import-dir 
---input C:\Users\[USER]\Desktop\krakow-mallet\data\docs-all 
---output C:\Users\[USER]\Desktop\krakow-mallet\data\docs-all.mallet 
+--input C:\Users\[USER]\Desktop\press\1-input 
+--output C:\Users\[USER]\Desktop\press\2-mallet\press.mallet 
 --keep-sequence 
 --remove-stopwords TRUE 
---stoplist-file C:\Users\[USER]\Desktop\krakow-mallet\data\stopwords\doyle-100.txt
+--stoplist-file C:\Users\[USER]\Desktop\press\stopwords.txt
 ```
 </script>
 </section>
@@ -744,7 +743,6 @@ bin\mallet import-dir
 * tell Mallet to do some modeling (`train-topics`)
 * ...where the corpus file is (`--input`)
 * ...how many topics to model (`--num-topics`)
-* ...how to optimize internal parameters (`--optimize-interval`)
 * ...how many iterations to use (`--num-iterations`)
 * ...how many words to display per topic (`--num-topic-words`)
 * ...path for words-by-topics (`--output-topic-keys`)
@@ -758,13 +756,12 @@ bin\mallet import-dir
 ```
 ~/Programs/mallet-2.0.8
 ./bin/mallet train-topics  
---input ~/Desktop/press-en/2-mallet/press-en.mallet 
+--input ~/Desktop/press/2-mallet/press.mallet 
 --num-topics 20 
---optimize-interval 50 
---num-iterations 100 
---num-top-words 20 
---output-topic-keys ~/Desktop/press-en/2-mallet/topics-words.txt 
---output-doc-topics ~/Desktop/press-en/2-mallet/docs-topics.txt 
+--num-iterations 200 
+--num-top-words 10 
+--output-topic-keys ~/Desktop/press/2-mallet/topics-words.txt 
+--output-doc-topics ~/Desktop/press/2-mallet/docs-topics.txt 
 --doc-topics-max 20
 ```
 </script>
@@ -774,15 +771,13 @@ bin\mallet import-dir
 <script type="text/template">
 ## (2) Build the topic model (Windows)
 ```
-bin\mallet 
-train-topics 
---input C:\\Users\[USER]\Desktop\krakow-mallet\data\docs-all.mallet 
+bin\mallet train-topics 
+--input C:\\Users\[USER]\Desktop\press\2-mallet\press.mallet 
 --num-topics 20 
---optimize-interval 50 
---num-iterations 500 
+--num-iterations 100 
 --num-top-words 20 
---output-topic-keys C:\\Users\[USER]\Desktop\krakow-mallet\models\docs-all\topics-with-words.txt 
---output-doc-topics C:\\Users\[USER]\Desktop\krakow-mallet\models\docs-all\topics-in-texts.txt 
+--output-topic-keys C:\\Users\[USER]\Desktop\press\2-mallet\topics-words.txt 
+--output-doc-topics C:\\Users\[USER]\Desktop\press\2-mallet\docs-topics.txt 
 --doc-topics-max 20
 ```
 </script>
@@ -808,7 +803,7 @@ train-topics
 ## Preparation
 * Open "run-mallet.txt" in text editor
 * Find the Mallet installation folder on your computer and copy the path into your text file
-* Find the "press-en" folder on your computer and copy the path into your text file
+* Find the "press" folder on your computer and copy the path into your text file
 * Copy the generic `import` and `train-topic` commands from the presentation into your text file
 * Now you're all set!
 </script>
@@ -817,7 +812,8 @@ train-topics
 <section data-markdown>
 <script type="text/template">
 ## Exercise 1: Import and model
-* Build the `import` and `train-topic` commands for your system
+* Build the `import` and `train-topic` commands for your system;
+* remember to remove all line breaks in the command
 * Use the `import` comand and make sure the right `*.mallet` corpus appears
 * Use the `train-topics` command and make sure the output files appear
 * Inspect the results; do you get nice topics?
@@ -829,10 +825,11 @@ train-topics
 <script type="text/template">
 ## Exercise 2: Adapt the commands
 * At your choice, do *one* of the following 
-    * Activate or deactivate the stopwords list
+    * Activate or deactivate, or modify, the stopwords list (on import)
     * Use a larger or smaller number of topics
     * Perform fewer or more iterations
     * Display more or less topic words
+    * Add the parameter --optimize-interval 10 to your modeling command
 * Make sure the files are written to a new folder (e.g. "2-mallet_v2/")
 * Inspect the results and write down any changes you notice
 </script>
