@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <!-- CUSTOMIZE THIS! -->
-<title>Topic Modeling Tutorial</title>
+<title>Topic Modeling Workshop Edinburgh</title>
 <meta name="author" content="Christof Schöch">
 <!-- END -->
 <meta name="description" content="Slides">
@@ -35,14 +35,14 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
 
 <section data-markdown>
 <script type="text/template">
-# Topic Modeling Tutorial: Theory and Praxis
+# Topic Modeling <br/>Workshop
 <hr/>
 <br/>
-<p>Erasmus+ Workshop</p>
-<p>Kraków, March/April 2016</p>
+<br/>
+<p><b><a href="http://www.digital.hss.ed.ac.uk/blackbox/">Beyond the Black Box</a></b><br/>Edinburgh, January 2017</p>
 <br/>
 <hr/>
-<p>Christof Schöch<br/>(CLiGS, University of Würzburg)</p>
+<p>Christof Schöch<br/>(CLiGS, University of Würzburg, Germany)</p>
 <p><img height="50" data-src="img/basics/UWUE.jpg"></img>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img height="100" data-src="img/basics/CLiGS.jpg"></img>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img height="50" data-src="img/basics/BMBF.jpg"></img></p>
 </script>
 </section>
@@ -50,18 +50,15 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
 <section data-markdown>
 <script type="text/template">
 ## Overview
-1. What is Topic Modeling? (theory)
+1. What is Topic Modeling?  <!-- .element: class="fragment" data-fragment-index="1" -->
     * How does a topic model look like?
     * How do we arrive at such a model?
-2. Visualising Topics
-    * Individual topics
-    * Topic distributions
-3. Doing Topic Modeling (hands-on)
-    * Fundamentals 
-    * The details
-    * Practice
-    * Using tmw
-
+2. Interpreting Topic Models <!-- .element: class="fragment" data-fragment-index="2" -->
+    * Example analysis
+    * Further visualizations
+3. Doing Topic Modeling (hands-on) <!-- .element: class="fragment" data-fragment-index="3" -->
+    * Telling MALLET what to do
+    * Practice time!
 </script>
 </section>
 
@@ -75,10 +72,17 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
 
 <section data-markdown>
 <script type="text/template">
+# (a) Getting started
+</script>
+</section>
+
+
+<section data-markdown>
+<script type="text/template">
 ## Topic Modeling: basic idea
 * Works on the basis of (large) collections of documents <!-- .element: class="fragment" data-fragment-index="1" -->
-* The purpose is to discover thematic trends and patterns <!-- .element: class="fragment" data-fragment-index="2" -->
-* Each document is understood as a mixture of topics <!-- .element: class="fragment" data-fragment-index="3" -->
+* Each document is understood as a mixture of topics <!-- .element: class="fragment" data-fragment-index="2" -->
+* The purpose is to discover thematic trends and patterns <!-- .element: class="fragment" data-fragment-index="3" -->
 * Discovered through generative probabilistic modeling <!-- .element: class="fragment" data-fragment-index="4" -->
 </script>
 </section>
@@ -86,7 +90,40 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
 
 <section data-markdown>
 <script type="text/template">
-# (a) How does a topic model look like?
+## Usage scenarios
+* Information Retrieval: Search not for individual terms, but themes / semantic fields <!-- .element: class="fragment" data-fragment-index="1" -->
+* Recommender Systems: Recommend similar journal articles etc. to users <!-- .element: class="fragment" data-fragment-index="2" -->
+* Exploration of text collections <!-- .element: class="fragment" data-fragment-index="3" -->
+* Research questions from literary studies, cultural studies, history <!-- .element: class="fragment" data-fragment-index="4" -->
+</script>
+</section>
+
+<section data-markdown>
+<script type="text/template">
+## Explorative Visualization
+<p><a href="http://signsat40.signsjournal.org/topic-model/#/model/grid"><img height="500" data-src="img/signs-at-forty.png"></img></a></p>
+<p>Signs at 40</p>
+</script>
+</section>
+
+
+<section data-markdown>
+<script type="text/template">
+## Existing Studies
+* Cameron Blevins: "Topic Modeling Martha Ballard's Diary" (2010): diary <!-- .element: class="fragment" data-fragment-index="1" -->
+* Ted Underwood und Andrew Goldstone (2012): "What can topic models of PMLA teach us...": history of a discipline <!-- .element: class="fragment" data-fragment-index="2" -->
+* Lisa Rhody, "Topic Modeling and Figurative Language" (2012): Poesie <!-- .element: class="fragment" data-fragment-index="3" -->
+* Matthew Jockers, Macroanalysis (2013): novel, nationality, gender <!-- .element: class="fragment" data-fragment-index="4" -->
+* Ben Schmidt: "Typical TV episodes" (2014): TV shows; temporal development <!-- .element: class="fragment" data-fragment-index="5" -->
+* Christof Schöch, "Topic Modeling Genre" (2017): drama, subgenres <!-- .element: class="fragment" data-fragment-index="6" -->
+</script>
+</section>
+
+
+
+<section data-markdown>
+<script type="text/template">
+# (b) How does a topic model look like?
 </script>
 </section>
 
@@ -100,8 +137,8 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
 
 <section data-markdown>
 <script type="text/template">
-## On a practival level
-* A topic is a group of words with some semantic relation (e.g., common theme) <!-- .element: class="fragment" data-fragment-index="1" -->
+## On a practical level
+* A topic is a group of words with some (semantic) relation (e.g., common theme) <!-- .element: class="fragment" data-fragment-index="1" -->
 * Each topic is made up of words of varying importance and relevance to the topic <!-- .element: class="fragment" data-fragment-index="2" -->
 * Each document is made up of several topics in various proportions <!-- .element: class="fragment" data-fragment-index="3" -->
 </script>
@@ -111,8 +148,9 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
 <script type="text/template">
 ## On a technical level
 * A topic model is an abstract representation of topics and documents <!-- .element: class="fragment" data-fragment-index="1" -->
-* A topic is a probability distribution over words <!-- .element: class="fragment" data-fragment-index="2" -->
+* A topic model is the result of a transformation; a dimensionality reduction <!-- .element: class="fragment" data-fragment-index="2" -->
 * A document is a probability distribution over topics <!-- .element: class="fragment" data-fragment-index="3" -->
+* A topic is a probability distribution over words <!-- .element: class="fragment" data-fragment-index="4" -->
 </script>
 </section>
 
@@ -120,7 +158,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
 <script type="text/template">
 ## The model: topics
 <p><img height="400" data-src="img/word-scores-in-topics.png"></img></p>
-<p>(Each word has a score in each topic; shown by rank)
+<p>(Each word has a score in each topic; here ordered by topic/rank)
 </script>
 </section>
 
@@ -128,24 +166,15 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
 <script type="text/template">
 ## The model: documents
 <p><img height="400" data-src="img/docs-and-topics-in-rank.png"></img></p>
-<p>(Each topic has a score in each document; shown by rank)
+<p>(Each topic has a score in each document; ordered by document)
 </script>
 </section>
 
 
-<!--
-<section data-markdown>
-<script type="text/template">
-## The model: overview
-<p><img height="400" data-src="img/topic-score-words-in-rank.png"></img></p>
-<p>(Each topic has a collection-wide score and top-words)
-</script>
-</section>
--->
 
 <section data-markdown>
 <script type="text/template">
-## (b) How do we arrive at a topic model?
+## (c) How do we arrive at a topic model?
 </script>
 </section>
 
@@ -168,24 +197,13 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
 ## Generative, inverted, iterative
 <br/>
 >"A topic model is a generative model for documents: it specifies a simple probabilistic procedure by which documents
-can be generated. To make a new document, one chooses a distribution over topics. Then, for each word in that
-document, one chooses a topic at random according to this distribution, and draws a word from that topic. Standard
-statistical techniques can be used to invert this process, inferring the set of topics that were responsible for
-generating a collection of documents."
+can be generated. To make a new document, one chooses a distribution over topics. Then, for each word in that document, one chooses a topic at random according to this distribution, and draws a word from that topic. Standard statistical techniques can be used to invert this process, inferring the set of topics that were responsible for generating a collection of documents."
 
 <br/>
 <p>(Steyvers and Griffiths, "Probabilistic Topic Modeling", 2006)</p>
 </script>
 </section>
 
-
-<section data-markdown>
-<script type="text/template">
-## Topic Modeling as 'reverse engineering'
-* Example from software development: Analyse a piece of proprietary software, discover how its (hidden) code-base is structured, and implement an open-source clone with similar functionality as the original  <!-- .element: class="fragment" data-fragment-index="1" -->
-* By analogy: By analysing a collection of documents, discover its (latent) thematic structure and based on this, engineer a model that can generate documents with the same themes    <!-- .element: class="fragment" data-fragment-index="2" -->
-</script>
-</section>
 
 
 <section data-markdown>
@@ -232,45 +250,40 @@ generating a collection of documents."
 <section data-markdown>
 <script type="text/template">
 ## The process of LDA: generative
-* For each topic:  <!-- .element: class="fragment" data-fragment-index="1" -->
-    * There is a distribution over words <!-- .element: class="fragment" data-fragment-index="2" -->
-* For each document:  <!-- .element: class="fragment" data-fragment-index="3" -->
-    * There is a distribution over topics <!-- .element: class="fragment" data-fragment-index="4" -->
-    * For each word in the document:  <!-- .element: class="fragment" data-fragment-index="5" -->
-        * We sample a word from the word distribution of that topic. <!-- .element: class="fragment" data-fragment-index="6" -->
-        * Once all words are chosen, the document is finished <!-- .element: class="fragment" data-fragment-index="7" -->
-* (This only works if we already have the distributions) <!-- .element: class="fragment" data-fragment-index="8" -->
+* For each topic, there is a distribution over words <!-- .element: class="fragment" data-fragment-index="1" -->
+* For each document, there is a distribution over topics <!-- .element: class="fragment" data-fragment-index="2" -->
+* For each word in each document:  <!-- .element: class="fragment" data-fragment-index="3" -->
+    * We sample a topic from the topic distribution of that document. <!-- .element: class="fragment" data-fragment-index="4" -->
+    * We sample a word from the word distribution of that topic. <!-- .element: class="fragment" data-fragment-index="5 -->
+* (This can only work if we have the distributions; which we don't)  <!-- .element: class="fragment" data-fragment-index="6" -->
 </script>
 </section>
 
 <section data-markdown>
 <script type="text/template">
 ## The process of LDA: probabilistic
-* For each topic:  <!-- .element: class="fragment" data-fragment-index="1" -->
-    * Generate a random distribution over words <!-- .element: class="fragment" data-fragment-index="2" -->
-* For each document:  <!-- .element: class="fragment" data-fragment-index="3" -->
-    * Generate a random distribution over topics <!-- .element: class="fragment" data-fragment-index="4" -->
-    * For each word in the document:  <!-- .element: class="fragment" data-fragment-index="5" -->
-        * Choose a topic from the topic distribution <!-- .element: class="fragment" data-fragment-index="6" -->
-        * Choose a word by sampling from the word distribution of that topic. <!-- .element: class="fragment" data-fragment-index="7" -->
-        * Once all words are chosen, the document is finished <!-- .element: class="fragment" data-fragment-index="8" -->
-* (Now we have random topic and document distributions; they don't match the real documents) <!-- .element: class="fragment" data-fragment-index="9" -->
+* For each document, we generate a random distribution over topics <!-- .element: class="fragment" data-fragment-index="1" -->
+* For each topic, we generate a random distribution over words <!-- .element: class="fragment" data-fragment-index="2" -->
+* For each word in each document:  <!-- .element: class="fragment" data-fragment-index="3" -->
+    * Sample a topic from the topic distribution <!-- .element: class="fragment" data-fragment-index="4" -->
+    * Sample a word from the word distribution of that topic. <!-- .element: class="fragment" data-fragment-index="5" -->
+* (Now we can generate documents; but they don't match the real documents) <!-- .element: class="fragment" data-fragment-index="6" -->
 </script>
 </section>
 
 <section data-markdown>
 <script type="text/template">
-## The process of LDA: sampling
+## The process of LDA: iterative
 * We have: <!-- .element: class="fragment" data-fragment-index="1" -->
     * the observed words in each document <!-- .element: class="fragment" data-fragment-index="1" -->
     * the words in each randomly generated document <!-- .element: class="fragment" data-fragment-index="1" -->
     * the (random) words-in-topics distribution <!-- .element: class="fragment" data-fragment-index="1" -->
     * the (random) topics-in-documents distribution <!-- .element: class="fragment" data-fragment-index="1" -->
-* Now we can iteratively model all these three together as a "joint distribution" (e.g. with Gibbs sampling): <!-- .element: class="fragment" data-fragment-index="2" -->
+* Now we can iteratively model all these together as a "joint distribution" (e.g. with Gibbs sampling): <!-- .element: class="fragment" data-fragment-index="2" -->
     * Generate documents <!-- .element: class="fragment" data-fragment-index="3" -->
     * Compare with the real documents <!-- .element: class="fragment" data-fragment-index="4" -->
     * Optimize the distributions / latent variables <!-- .element: class="fragment" data-fragment-index="5" -->
-* Do this until there is a sufficiently good approximation <!-- .element: class="fragment" data-fragment-index="6" -->
+* Do this until there is a sufficiently good approximation / convergence <!-- .element: class="fragment" data-fragment-index="6" -->
 </script>
 </section>
 
@@ -318,6 +331,8 @@ generating a collection of documents."
 <section data-markdown>
 <script type="text/template">
 ## Latent Dirichlet Allocation: plate notation
+<small>
+
 * D = number of documents (given)
 * T = number of topics (set by researcher)
 * Nd = number of words in document d
@@ -327,6 +342,8 @@ generating a collection of documents."
 * ϕ (phi): distribution over words (for each topic; latent variable) 
 * z = assignment of words to topics (latent variable)
 * w = words in a document (observed variable)
+
+</small>
 </script>
 </section>
 
@@ -338,140 +355,134 @@ generating a collection of documents."
 
 <section data-markdown>
 <script type="text/template">
-# 2. Results: Visualizing topics
-</script>
-</section>
-
-<section data-markdown>
-<script type="text/template">
-## 2.1 Individual Topics
+# 2. Interpreting Topic Models
 </script>
 </section>
 
 
 <section data-markdown>
 <script type="text/template">
-## Text collection: 840 French novels
+## (a) Example analysis: French crime fiction
+</script>
+</section>
+
+<section data-markdown>
+<script type="text/template">
+## Text collection: 840 French Novels
 <img height="500" data-src="img/textsammlung.png"></img>
 </script>
 </section>
 
 
-<section data-markdown>
-<script type="text/template">
-## A topic as a wordcloud
-<img height="500" data-src="img/wordle_tp092x.png"></img>
-</script>
-</section>
 
 <section data-markdown>
 <script type="text/template">
-## Money-coin-franc
-<img height="500" data-src="img/wordle_tp028x.png"></img>
+## Crime fiction (prototypical)
+* Long, narrative, fictional prose (=novel) <!-- .element: class="fragment" data-fragment-index="1" -->
+* Character inventory: investigators, criminals, suspects, witnesses, victims <!-- .element: class="fragment" data-fragment-index="2" -->
+* Plot: violent crime, rational elucidation <!-- .element: class="fragment" data-fragment-index="3" -->
+* Setting: urban space <!-- .element: class="fragment" data-fragment-index="4" -->
+* => Hypotheses regarding possible topics <!-- .element: class="fragment" data-fragment-index="5" -->
 </script>
 </section>
 
-<section data-markdown>
-<script type="text/template">
-## professor-science-savant
-<img height="500" data-src="img/wordle_tp011x.png"></img>
-</script>
-</section>
+
 
 <section data-markdown>
 <script type="text/template">
-## book-library-page
-<img height="500" data-src="img/wordle_tp041x.png"></img>
-</script>
-</section>
-
-<section data-markdown>
-<script type="text/template">
-## music-piano-song
-<img height="500" data-src="img/wordle_tp048x.png"></img>
-</script>
-</section>
-
-<section data-markdown>
-<script type="text/template">
-## animal-beast-lion
-<img height="500" data-src="img/wordle_tp075x.png"></img>
-</script>
-</section>
-
-<section data-markdown>
-<script type="text/template">
-## cave-puits-souterrain
-<img height="500" data-src="img/wordle_tp029x.png"></img>
-</script>
-</section>
-
-<section data-markdown>
-<script type="text/template">
-## corps-peau-bouche
-<img height="500" data-src="img/wordle_tp080x.png"></img>
-</script>
-</section>
-
-<section data-markdown>
-<script type="text/template">
-## crime-death-murder
-<img height="500" data-src="img/wordle_tp002x.png"></img>
-</script>
-</section>
-
-<section data-markdown>
-<script type="text/template">
-## car-street-driver
-<img height="500" data-src="img/wordle_tp061x.png"></img>
-</script>
-</section>
-
-<section data-markdown>
-<script type="text/template">
-## téléphone-numéro-bureau
-<img height="500" data-src="img/wordle_tp003x.png"></img>
+##Topic 10 
+<p><a href="img/2_topic10-wordle-comparison.png"><img height="400" data-src="img/2_topic10-wordle-comparison.png"></img></a></p>
+<p><b>Topic 10: detective, inspector, police</b></p>
+<p>Distinctive of crime fiction (content & statistics) (p &lt; α=0.01)</p> <!-- .element: class="fragment" data-fragment-index="1" -->
 </script>
 </section>
 
 
 <section data-markdown>
 <script type="text/template">
-## 2.1 Topic distributions</h2>
+##Topic 49
+<p><a href="img/2_topic49-wordle-comparison.png"><img height="400" data-src="img/2_topic49-wordle-comparison.png"></img></a></p>
+<p><b>Topic 49: death, crime, to kill</b></p>
+<p>Distinctive of crime fiction (content & statistics) (p &lt; α=0.01)</p>
+</script>
+</section>
+
+
+<section data-markdown>
+<script type="text/template">
+##Topic 47
+<p><a href="img/2_topic47-wordle-comparison.png"><img height="400" data-src="img/2_topic47-wordle-comparison.png"></img></a></p>
+<p><b>Topic 47: door, room, to open</b></p>
+<p>Statistically distinctive (p &lt; α=0.01); but content-wise?</p> 
+</script>
+</section>
+
+
+<section data-markdown>
+<script type="text/template">
+##Topic 26 
+<p><a href="img/2_topic26-wordle-comparison.png"><img height="400" data-src="img/2_topic26-wordle-comparison.png"></img></a></p>
+<p><b>Topic 26: beach, sand, sun</b></p>
+<p>Distinctive of non-crime fiction (p &lt; α=0.001)</p>
+</script>
+</section>
+
+
+<section data-markdown>
+<script type="text/template">
+## Topics im Textverlauf
+<p><a href="img/2_topic002_progression.png"><img height="400" data-src="img/2_topic002_progression.png"></img></a></p>
+<p><b>Topic 2: judge, prison, lawyer/attorney</b></p>
+<p>Statistically significant (crime fiction): (1,4), (4,5) etc.</p>
+</script>
+</section>
+
+
+<section data-markdown>
+<script type="text/template">
+## Topics im Textverlauf
+<p><a href="img/2_topic033_progression.png"><img height="400" data-src="img/2_topic033_progression.png"></img></a></p>
+<p><b>Topic 33: black, hair, eyes, wear, eye, face</b></p>
+<p>Statistically significant: crime fiction all but (2,3);<br/> non-crime fiction (1,3), (2,5)</p>
+</script>
+</section>
+
+
+
+<section data-markdown>
+<script type="text/template">
+## Overall results
+* A large part of the topics is statistically distinctive: crime fiction (31/80) non-crime fiction (21/80) <!-- .element: class="fragment" data-fragment-index="1" -->
+* Topics are not just themes, but also narrative motives, descriptive elements, character sets <!-- .element: class="fragment" data-fragment-index="2" -->
+* Textual progression: only a few topics have significant trends <!-- .element: class="fragment" data-fragment-index="3" -->
+* Overall: we can detect thematic trends in 840 novels without reading (all of) them! <!-- .element: class="fragment" data-fragment-index="4" -->
+</script>
+</section>
+
+
+<section data-markdown>
+<script type="text/template">
+## (b) Some more visualizations
 </script>
 </section>
 
 <section data-markdown>
 <script type="text/template">
-## Topics/documents heatmap
-<img height="500" data-src="img/topic-doc-matrix.png"></img>
-</script>
-</section>
-
-<section data-markdown>
-<script type="text/template">
-## Topic 3 and subgenres
-<img height="500" data-src="img/tI_by-subgenre-003.png"></img>
-</script>
-</section>
-
-<section data-markdown>
-<script type="text/template">
-## Topics 3 and types of crime fiction
+## Topics and subgenres: topic 3
 <img height="500" data-src="img/tI_by-subsubgenre-003.png"></img>
 </script>
 </section>
 
 <section data-markdown>
 <script type="text/template">
-## Topics and authors: single topics
+## Topics and authors: topic 3
 <img height="500" data-src="img/tI_by-author-name-003.png"></img>
 </script>
 </section>
 
 <section data-markdown>
 <script type="text/template">
-## Topics / subgenres overview
+## Topics / subgenres heatmap
 <img height="500" data-src="img/dist-heatmap_by-subsubgenre_policier-smallset.jpg"></img>
 </script>
 </section>
@@ -523,20 +534,6 @@ generating a collection of documents."
 
 <section data-markdown>
 <script type="text/template">
-## Text collection: 127 Spanish novels
-<img height="500" data-src="img/textsammlung_ES.png"></img>
-</script>
-</section>
-
-<section data-markdown>
-<script type="text/template">
-## topic / genre heatmap
-<img height="500" data-src="img/topic-genre-heatmap.png"></img>
-</script>
-</section>
-
-<section data-markdown>
-<script type="text/template">
 ## topics over text progression
 <img height="500" data-src="img/topics_fallend.png"></img>
 </script>
@@ -556,6 +553,14 @@ generating a collection of documents."
 </script>
 </section>
 
+<section data-markdown>
+<script type="text/template">
+## PCA based on topic scores (subgenres)
+<img height="500" data-src="img/topic-pca.png"></img>
+</script>
+</section>
+
+
 </section>
 <section>
 
@@ -568,14 +573,33 @@ generating a collection of documents."
 
 <section data-markdown>
 <script type="text/template">
-## 3.1 Fundamentals
+## (a) Fundamentals
 </script>
 </section>
 
 
 <section data-markdown>
 <script type="text/template">
-## Mallet: the heart of topic modeling
+## (2) Topic Modeling Workflow
+<p><a href="img/2_topic-modeling-workflow.png"><img height="500" data-src="img/2_topic-modeling-workflow.png"></img></a></p>
+<p>(Mallet und Python; siehe <a href="http://github.com/cligs/tmw">github.com/cligs/tmw</a>.)</p>
+</script>
+</section>
+
+
+<section data-markdown>
+<script type="text/template">
+## Parameters
+* Preprocessing: length of the text segments, lemmatization, feature selection  <!-- .element: class="fragment" data-fragment-index="1" -->
+* Modelling: number of topics, number of iterations, distribution optimization  <!-- .element: class="fragment" data-fragment-index="2" -->
+* Visualization: aggregation strategy, normalization, choice of visualization  <!-- .element: class="fragment" data-fragment-index="3" -->
+</script>
+</section>
+
+
+<section data-markdown>
+<script type="text/template">
+## MALLET: the heart of topic modeling
 * Preprocessing is done elsewhere (eg., with tmw)
 * Postprocessing and visualisation is done elsewhere (eg., with tmw)
 * Mallet imports texts and builds the topic model (and does it really well)
@@ -596,22 +620,36 @@ generating a collection of documents."
 </script>
 </section>
 
+
+<section data-markdown>
+<script type="text/template">
+## Testing Mallet
+(using the Linux Terminal; from anywhere on the system)
+```
+cd ~/Programs/mallet-2.0.8/
+./bin/mallet
+```
+<br/>
+(using the Windows CMD; from anywhere on the system)
+```
+cd C:\Programs\mallet-2.0.8
+.\bin\mallet
+```
+(List of commands should show up.)
+</script>
+</section>
+
+
+
+
 <section data-markdown>
 <script type="text/template">
 ## Folder structure
-* /krakow-mallet/
-   * archive/
-   * data/
-       * docs-all/
-       * segs-all/
-       * segs-n/
-       * segs-nv/
-       * stopwords/
-   * models/
-       * docs-all/
-       * segs-all/
-       * segs-n
-       * segs-nv
+* /press-en/
+   * 1-texts/
+   * 2-mallet/
+   * 3-derived
+   * metadata.csv
 </script>
 </section>
 
@@ -619,7 +657,7 @@ generating a collection of documents."
 <script type="text/template">
 ## Calling Mallet: two steps
 * "import"
-    * Converts the text files into the Mallet corpus format
+    * Converts the input text files into the Mallet corpus format
     * Writes a binary file
 * "train-topics"
     * Performs the actual modeling on the corpus
@@ -630,7 +668,7 @@ generating a collection of documents."
 
 <section data-markdown>
 <script type="text/template">
-## 3.2 The details
+## (b) The details
 </script>
 </section>
 
@@ -843,21 +881,30 @@ train-topics
 <section data-markdown>
 <script type="text/template">
 ## Further Reading: Theory and Tutorials
-* Blei, D. M. (2012). "Probabilistic topic models". In: _Communications of the ACM_, 55(4): 77–84. <http://www.cs.princeton.edu/~blei/papers/Blei2012.pdf>
+<small>
+
+* Blei, David M. (2012). "Probabilistic topic models". In: _Communications of the ACM_, 55(4): 77–84. <http://www.cs.princeton.edu/~blei/papers/Blei2012.pdf>
 * Steyvers, M. and Griffiths, T. (2006). "Probabilistic Topic Models". In: Landauer, T. et al. (eds), _Latent Semantic Analysis: A Road to Meaning_. Laurence Erlbaum.
-* Weingart, S. (2012). "Topic Modeling for Humanists: A Guided Tour". In: _The Scottbot Irregular_. <http://www.scottbot.net/HIAL/?p=19113>
+* Weingart, Scott (2012). "Topic Modeling for Humanists: A Guided Tour". In: _The Scottbot Irregular_. <http://www.scottbot.net/HIAL/?p=19113>
+* Graham, Shawn, Scott Weingart and Ian Milligan (2012). "Getting Started with Topic Modeling and MALLET". _The Programming Historian_. <http://programminghistorian.org/lessons/topic-modeling-and-mallet>
 * Riddell, Allen. (2014). "TAToM: Text Analysis with Topic Modeling for Humanities Scholars". In: _DARIAH-DE Schulungsmaterialien_. <https://de.dariah.eu/tatom/>
+
+</small>
 </script>
 </section>
 
 <section data-markdown>
 <script type="text/template">
 ## Further Reading: Applications
-* Blevins, C. (2010). "Topic Modeling Martha Ballard’s Diary". In: _Historying_. <http://historying.org/2010/04/01/topic-modeling-martha-ballards-diary/>
-* Jockers, M. L. (2013). _Macroanalysis - Digital Methods and Literary History_. Champaign, IL: University of Illinois Press.
-* Rhody, L. M. (2012). "Topic Modeling and Figurative Language". In: _Journal of Digital Humanities_, 2(1). <http://journalofdigitalhumanities.org/2-1/topic-modeling-and-figurative-language-by-lisa-m-rhody/>
-* Schöch, C. (2016, to appear). "Topic Modeling Genre: An Exploration of French Classical and Enlightenment Drama". In: _Digital Humanities Quarterly_. <http://digitalhumanities.org/dhq/>
-* Underwood, T. and Goldstone, A. (2012)." "What can topic models of PMLA teach us about the history of literary scholarship?" In: _The Stone and the Shell_. <http://tedunderwood.com/2012/12/14/what-can-topic-models-of-pmla-teach-us-about-the-history-of-literary-scholarship/>
+<small>
+
+* Blevins, Cameron (2010). "Topic Modeling Martha Ballard’s Diary". In: _Historying_. <http://historying.org/2010/04/01/topic-modeling-martha-ballards-diary/>
+* Jockers, Matt (2013). _Macroanalysis - Digital Methods and Literary History_. Champaign, IL: University of Illinois Press.
+* Rhody, Lisa (2012). "Topic Modeling and Figurative Language". In: _Journal of Digital Humanities_, 2(1). <http://journalofdigitalhumanities.org/2-1/topic-modeling-and-figurative-language-by-lisa-m-rhody/>
+* Schöch, Christof (2017, to appear). "Topic Modeling Genre: An Exploration of French Classical and Enlightenment Drama". In: _Digital Humanities Quarterly_. <https://zenodo.org/record/166356>
+* Underwood, Ted and Andrew Goldstone (2012)." "What can topic models of PMLA teach us about the history of literary scholarship?" In: _The Stone and the Shell_. <http://tedunderwood.com/2012/12/14/what-can-topic-models-of-pmla-teach-us-about-the-history-of-literary-scholarship/>
+
+</small>
 </script>
 </section>
 
@@ -869,12 +916,21 @@ train-topics
 <br/>
 <br/>
 <br/>
+## Thank you!
 <br/>
-<p>Author: Christof Schöch, 2016</p>
-<p><http://www.christof-schoech.de/en>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
 <hr/>
-<p>License: Creative Commons Attribution 4.0 International</p>
-<p><https://creativecommons.org/licenses/by/4.0/></p>
+<p>Christof Schöch, 2017</p>
+<p><a href="https://christofs.github.io/">christofs.github.io</a></p>
+<p><a href="https://creativecommons.org/licenses/by/4.0/">CC-BY 4.0</a><br/></p>
+<hr/>
+<br/>
+<br/>
 </script>
 </section>
 
@@ -888,21 +944,21 @@ train-topics
 // Full list of configuration options available at:
 // https://github.com/hakimel/reveal.js#configuration
 Reveal.initialize({
-	controls: true,
-	progress: true,
-	history: true,
-	center: true,
-	transition: 'slide', // none/fade/slide/convex/concave/zoom
-	// Optional reveal.js plugins
-	dependencies: [
-		{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
-		{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-		{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-		{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
-		{ src: 'plugin/zoom-js/zoom.js', async: true },
-		{ src: 'plugin/notes/notes.js', async: true }
-		]
-	});
+    controls: true,
+    progress: true,
+    history: true,
+    center: true,
+    transition: 'slide', // none/fade/slide/convex/concave/zoom
+    // Optional reveal.js plugins
+    dependencies: [
+        { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+        { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+        { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+        { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+        { src: 'plugin/zoom-js/zoom.js', async: true },
+        { src: 'plugin/notes/notes.js', async: true }
+        ]
+    });
 </script>
 </body>
 </html>
