@@ -582,7 +582,7 @@ can be generated. To make a new document, one chooses a distribution over topics
 <script type="text/template">
 ## (2) Topic Modeling Workflow
 <p><a href="img/2_topic-modeling-workflow.png"><img height="500" data-src="img/2_topic-modeling-workflow.png"></img></a></p>
-<p>(Mallet und Python; siehe <a href="http://github.com/cligs/tmw">github.com/cligs/tmw</a>.)</p>
+<p>(Mallet and Python; see <a href="http://github.com/cligs/tmw">github.com/cligs/tmw</a>)</p>
 </script>
 </section>
 
@@ -619,8 +619,8 @@ can be generated. To make a new document, one chooses a distribution over topics
 <section data-markdown>
 <script type="text/template">
 ## Some useful links
-* This section of the slides: <br/>https://christofs.github.io/topic-modeling-edinburgh/#/4/5 
-* The dataset (Hong Kong Universities' Press Releases): <br/>[DROPBOX LINK]
+* This section of the slides: <br/>https://christofs.github.io/topic-modeling-edinburgh/#/4/6 
+* The dataset (Hong Kong Universities' Press Releases): <br/> <https://dl.dropboxusercontent.com/u/1786135/press.zip>
 * The MALLET Topic Modeling page: <br/>http://mallet.cs.umass.edu/topics.php
 </script>
 </section>
@@ -775,8 +775,8 @@ bin\mallet import-dir
 bin\mallet train-topics 
 --input C:\\Users\[USER]\Desktop\press\2-mallet\press.mallet 
 --num-topics 20 
---num-iterations 100 
---num-top-words 20 
+--num-iterations 200 
+--num-top-words 10 
 --output-topic-keys C:\\Users\[USER]\Desktop\press\2-mallet\topics-words.txt 
 --output-doc-topics C:\\Users\[USER]\Desktop\press\2-mallet\docs-topics.txt 
 --doc-topics-max 20
