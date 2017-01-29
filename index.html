@@ -93,8 +93,8 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
 ## Usage scenarios
 * Information Retrieval: Search not for individual terms, but themes / semantic fields <!-- .element: class="fragment" data-fragment-index="1" -->
 * Recommender Systems: Recommend similar journal articles etc. to users <!-- .element: class="fragment" data-fragment-index="2" -->
-* Exploration of text collections <!-- .element: class="fragment" data-fragment-index="3" -->
-* Research questions from literary studies, cultural studies, history <!-- .element: class="fragment" data-fragment-index="4" -->
+* Exploration of text collections: what is an email or newspaper corpus about? <!-- .element: class="fragment" data-fragment-index="3" -->
+* Research questions from literary studies, cultural studies, history: topics across authors, genres, time periods <!-- .element: class="fragment" data-fragment-index="4" -->
 </script>
 </section>
 
@@ -147,16 +147,16 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
 <section data-markdown>
 <script type="text/template">
 ## On a technical level
-* A topic model is an abstract representation of topics and documents <!-- .element: class="fragment" data-fragment-index="1" -->
-* A topic model is the result of a transformation; a dimensionality reduction <!-- .element: class="fragment" data-fragment-index="2" -->
-* A document is a probability distribution over topics <!-- .element: class="fragment" data-fragment-index="3" -->
-* A topic is a probability distribution over words <!-- .element: class="fragment" data-fragment-index="4" -->
+* A topic model is an abstract representation of all topics and documents in a collection <!-- .element: class="fragment" data-fragment-index="1" -->
+* A topic is a probability distribution over words <!-- .element: class="fragment" data-fragment-index="3" -->
+* A document is a probability distribution over topics <!-- .element: class="fragment" data-fragment-index="4" -->
+* The Dirichlet distribution (in LDA) describes the topic mixture distribution of the model <!-- .element: class="fragment" data-fragment-index="5" -->
 </script>
 </section>
 
 <section data-markdown>
 <script type="text/template">
-## The model: topics
+## Words in topic distribution
 <p><img height="400" data-src="img/word-scores-in-topics.png"></img></p>
 <p>(Each word has a score in each topic; here ordered by topic/rank)
 </script>
@@ -164,9 +164,17 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
 
 <section data-markdown>
 <script type="text/template">
-## The model: documents
+## Topics in document distribution
 <p><img height="400" data-src="img/docs-and-topics-in-rank.png"></img></p>
 <p>(Each topic has a score in each document; ordered by document)
+</script>
+</section>
+
+<section data-markdown>
+<script type="text/template">
+## Dirichlet distributions for both
+<p><img height="400" data-src="img/two-dirichlet-distributions.png"></img></p>
+<p>(Describe the topic and word mixture distributions of the model)<br/>(Here two possible distributions with three words/topics)</p>
 </script>
 </section>
 
@@ -184,7 +192,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
 * The most widespread implementation uses 'Latent Dirichlet Allocation'
 * Follows the "bag-of-words"-model: word order is irrelevant <!-- .element: class="fragment" data-fragment-index="1" -->
 * No semantic knowledge / dictionary / WordNet etc. is used; language-independent <!-- .element: class="fragment" data-fragment-index="2" -->
-* Based distributional semantics: "a word is characterized by the company it keeps" (John Firth 1957) <!-- .element: class="fragment" data-fragment-index="3" -->
+* Based on distributional semantics: "a word is characterized by the company it keeps" (John Firth 1957) <!-- .element: class="fragment" data-fragment-index="3" -->
 * Discovers words which frequently occur together or in similar contexts (=topics)  <!-- .element: class="fragment" data-fragment-index="4" -->
 * Infers how important each word is in each topic <!-- .element: class="fragment" data-fragment-index="5" -->
 * Infers how important each topic is in each document <!-- .element: class="fragment" data-fragment-index="6" -->
@@ -196,8 +204,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
 <script type="text/template">
 ## Generative, inverted, iterative
 <br/>
->"A topic model is a generative model for documents: it specifies a simple probabilistic procedure by which documents
-can be generated. To make a new document, one chooses a distribution over topics. Then, for each word in that document, one chooses a topic at random according to this distribution, and draws a word from that topic. Standard statistical techniques can be used to invert this process, inferring the set of topics that were responsible for generating a collection of documents."
+>"A topic model is a generative model for documents: it specifies a simple probabilistic procedure by which documents can be generated. To make a new document, one chooses a distribution over topics. Then, for each word in that document, one chooses a topic at random according to this distribution, and draws a word from that topic. Standard statistical techniques can be used to invert this process, inferring the set of topics that were responsible for generating a collection of documents."
 
 <br/>
 <p>(Steyvers and Griffiths, "Probabilistic Topic Modeling", 2006)</p>
@@ -208,24 +215,25 @@ can be generated. To make a new document, one chooses a distribution over topics
 
 <section data-markdown>
 <script type="text/template">
-## Generative, inverted, iterative
-<p><img height="500" data-src="img/tm_steyvers1.png"></img></p>
-<p>(Steyvers and Griffiths, "Probabilistic Topic Modeling", 2006)</p>
+## Inference problem: observed data
+<p><img height="500" data-src="img/blei_topic-modeling_observed.png"></img></p>
+<p>(David Blei, "Topic Models" lecture, 2009)</p>
 </script>
 </section>
 
 <section data-markdown>
 <script type="text/template">
-## Generative, inverted, iterative
-<p><img height="500" data-src="img/tm_steyvers2.png"></img></p>
-<p>(Steyvers and Griffiths, "Probabilistic Topic Modeling", 2006)</p>
+## Inferred, latent model
+<p><img height="500" data-src="img/tm_blei.png"></img></p>
+<p>(David Blei, "Probabilistic Topic Models", 2012)</p>
 </script>
 </section>
 
 
+
 <section data-markdown>
 <script type="text/template">
-## Words, Topics, Documents
+## Bayesian Statistics
 >"The computational problem of inferring the hidden topic structure from the documents is the problem of computing the posterior distribution, the conditional distribution of the hidden variables given the documents."
 
 <br/>
@@ -234,13 +242,33 @@ can be generated. To make a new document, one chooses a distribution over topics
 </section>
 
 
+<section data-markdown>
+<script type="text/template">
+## Inference task
+<br/>
+###p(Z, φ, θ | w, α, β)
+<br/>
+<small>
+
+* Compute the probability p of the latent variables... 
+	* Z = assignments of each word in each document to a topic
+	* φ (phi) = distribution over words (for each topic)
+	* θ (theta) = distribution over topics (for each document)
+* ...given our observed variables (input data) and parameters
+	* w = the words in each document
+	* α = parameter of the Dirichlet prior for topic per document
+	* β = parameter of the Dirichlet prior for words per topic
+
+</small>
+</script>
+</section>
 
 
 <section data-markdown>
 <script type="text/template">
-## The process of LDA: starting point
+## The starting point of LDA
 * We have the documents with their words (e.g. as a word/document frequency matrix)  <!-- .element: class="fragment" data-fragment-index="1" -->
-* We are looking for the word distributions per topic and the topic distributions per document   <!-- .element: class="fragment" data-fragment-index="2" -->
+* We are looking for the word distributions per topic, the topic distributions per document, and the topic assignment of each word  <!-- .element: class="fragment" data-fragment-index="2" -->
 * Both distributions are dependent on each other (if a topic changes, the topic distributions change)  <!-- .element: class="fragment" data-fragment-index="3" -->
 * And both distributions need to fit with the original documents  <!-- .element: class="fragment" data-fragment-index="4" -->
 </script>
@@ -249,41 +277,37 @@ can be generated. To make a new document, one chooses a distribution over topics
 
 <section data-markdown>
 <script type="text/template">
-## The process of LDA: generative
+## The generative model behing LDA
 * For each topic, there is a distribution over words <!-- .element: class="fragment" data-fragment-index="1" -->
 * For each document, there is a distribution over topics <!-- .element: class="fragment" data-fragment-index="2" -->
-* For each word in each document:  <!-- .element: class="fragment" data-fragment-index="3" -->
-    * We sample a topic from the topic distribution of that document. <!-- .element: class="fragment" data-fragment-index="4" -->
-    * We sample a word from the word distribution of that topic. <!-- .element: class="fragment" data-fragment-index="5 -->
-* (This can only work if we have the distributions; which we don't)  <!-- .element: class="fragment" data-fragment-index="6" -->
+* For each word in each document: <!-- .element: class="fragment" data-fragment-index="3" -->
+    * We sample a topic from the topic distribution of that document.
+    * We sample a word from the word distribution of that topic.
+* (This can only work if we have the distributions; which we don't) <!-- .element: class="fragment" data-fragment-index="4" -->
 </script>
 </section>
 
 <section data-markdown>
 <script type="text/template">
-## The process of LDA: probabilistic
+## Random initialization
 * For each document, we generate a random distribution over topics <!-- .element: class="fragment" data-fragment-index="1" -->
 * For each topic, we generate a random distribution over words <!-- .element: class="fragment" data-fragment-index="2" -->
 * For each word in each document:  <!-- .element: class="fragment" data-fragment-index="3" -->
-    * Sample a topic from the topic distribution <!-- .element: class="fragment" data-fragment-index="4" -->
-    * Sample a word from the word distribution of that topic. <!-- .element: class="fragment" data-fragment-index="5" -->
-* (Now we can generate documents; but they don't match the real documents) <!-- .element: class="fragment" data-fragment-index="6" -->
+    * Sample a topic from the topic distribution
+    * Sample a word from the word distribution of that topic.
+* (Now we have a model; but it's not the one underlying our existing data <!-- .element: class="fragment" data-fragment-index="4" -->
 </script>
 </section>
 
 <section data-markdown>
 <script type="text/template">
-## The process of LDA: iterative
-* We have: <!-- .element: class="fragment" data-fragment-index="1" -->
-    * the observed words in each document <!-- .element: class="fragment" data-fragment-index="1" -->
-    * the words in each randomly generated document <!-- .element: class="fragment" data-fragment-index="1" -->
-    * the (random) words-in-topics distribution <!-- .element: class="fragment" data-fragment-index="1" -->
-    * the (random) topics-in-documents distribution <!-- .element: class="fragment" data-fragment-index="1" -->
-* Now we can iteratively model all these together as a "joint distribution" (e.g. with Gibbs sampling): <!-- .element: class="fragment" data-fragment-index="2" -->
-    * Generate documents <!-- .element: class="fragment" data-fragment-index="3" -->
-    * Compare with the real documents <!-- .element: class="fragment" data-fragment-index="4" -->
-    * Optimize the distributions / latent variables <!-- .element: class="fragment" data-fragment-index="5" -->
-* Do this until there is a sufficiently good approximation / convergence <!-- .element: class="fragment" data-fragment-index="6" -->
+## Inference: iterative approximation
+* Using the observed data and our (random/erroneous) model, we can improve the model <!-- .element: class="fragment" data-fragment-index="1" -->
+* One among several methods: Gibbs sampling <!-- .element: class="fragment" data-fragment-index="2" -->
+	* For one word in one document, remove the existing topic assignment <!-- .element: class="fragment" data-fragment-index="3" -->
+    * Based on the model and the other words in the document, assign a new topic to the word <!-- .element: class="fragment" data-fragment-index="4" -->
+    * Update the overall model according to this assignment;  <!-- .element: class="fragment" data-fragment-index="5" -->
+* Repeat until your time runs out or your evaluation task says it's ok to stop <!-- .element: class="fragment" data-fragment-index="6" -->
 </script>
 </section>
 
@@ -295,7 +319,7 @@ can be generated. To make a new document, one chooses a distribution over topics
 </script>
 </section>
 
-
+<!--
 <section data-markdown>
 <script type="text/template">
 ## Topic modeling: geometric interpretation
@@ -303,7 +327,7 @@ can be generated. To make a new document, one chooses a distribution over topics
 <p>(Steyvers and Griffiths, "Probabilistic Topic Modeling", 2006)</p>
 </script>
 </section>
-
+-->
 
 
 <section data-markdown>
@@ -390,7 +414,7 @@ can be generated. To make a new document, one chooses a distribution over topics
 
 <section data-markdown>
 <script type="text/template">
-##Topic 10 
+## Topic and subgenre
 <p><a href="img/2_topic10-wordle-comparison.png"><img height="400" data-src="img/2_topic10-wordle-comparison.png"></img></a></p>
 <p><b>Topic 10: detective, inspector, police</b></p>
 <p>Distinctive of crime fiction (content & statistics) (p &lt; α=0.01)</p> <!-- .element: class="fragment" data-fragment-index="1" -->
@@ -400,7 +424,7 @@ can be generated. To make a new document, one chooses a distribution over topics
 
 <section data-markdown>
 <script type="text/template">
-##Topic 49
+##Topic and subgenre
 <p><a href="img/2_topic49-wordle-comparison.png"><img height="400" data-src="img/2_topic49-wordle-comparison.png"></img></a></p>
 <p><b>Topic 49: death, crime, to kill</b></p>
 <p>Distinctive of crime fiction (content & statistics) (p &lt; α=0.01)</p>
@@ -410,7 +434,7 @@ can be generated. To make a new document, one chooses a distribution over topics
 
 <section data-markdown>
 <script type="text/template">
-##Topic 47
+##Topic and subgenre
 <p><a href="img/2_topic47-wordle-comparison.png"><img height="400" data-src="img/2_topic47-wordle-comparison.png"></img></a></p>
 <p><b>Topic 47: door, room, to open</b></p>
 <p>Statistically distinctive (p &lt; α=0.01); but content-wise?</p> 
@@ -420,7 +444,7 @@ can be generated. To make a new document, one chooses a distribution over topics
 
 <section data-markdown>
 <script type="text/template">
-##Topic 26 
+##Topic and subgenre
 <p><a href="img/2_topic26-wordle-comparison.png"><img height="400" data-src="img/2_topic26-wordle-comparison.png"></img></a></p>
 <p><b>Topic 26: beach, sand, sun</b></p>
 <p>Distinctive of non-crime fiction (p &lt; α=0.001)</p>
@@ -430,7 +454,7 @@ can be generated. To make a new document, one chooses a distribution over topics
 
 <section data-markdown>
 <script type="text/template">
-## Topics im Textverlauf
+## Topics over text segments
 <p><a href="img/2_topic002_progression.png"><img height="400" data-src="img/2_topic002_progression.png"></img></a></p>
 <p><b>Topic 2: judge, prison, lawyer/attorney</b></p>
 <p>Statistically significant (crime fiction): (1,4), (4,5) etc.</p>
@@ -440,7 +464,7 @@ can be generated. To make a new document, one chooses a distribution over topics
 
 <section data-markdown>
 <script type="text/template">
-## Topics im Textverlauf
+## Topics over text segments
 <p><a href="img/2_topic033_progression.png"><img height="400" data-src="img/2_topic033_progression.png"></img></a></p>
 <p><b>Topic 33: black, hair, eyes, wear, eye, face</b></p>
 <p>Statistically significant: crime fiction all but (2,3);<br/> non-crime fiction (1,3), (2,5)</p>
@@ -581,7 +605,7 @@ can be generated. To make a new document, one chooses a distribution over topics
 <section data-markdown>
 <script type="text/template">
 ## (2) Topic Modeling Workflow
-<p><a href="img/2_topic-modeling-workflow.png"><img height="500" data-src="img/2_topic-modeling-workflow.png"></img></a></p>
+<p><a href="img/topic-modeling-workflow_EN.png"><img height="500" data-src="img/topic-modeling-workflow_EN.png"></img></a></p>
 <p>(Mallet and Python; see <a href="http://github.com/cligs/tmw">github.com/cligs/tmw</a>)</p>
 </script>
 </section>
@@ -590,7 +614,7 @@ can be generated. To make a new document, one chooses a distribution over topics
 <section data-markdown>
 <script type="text/template">
 ## Parameters
-* Preprocessing: length of the text segments, lemmatization, feature selection  <!-- .element: class="fragment" data-fragment-index="1" -->
+* Preprocessing: length of the text segments, lemmatization, feature selection <!-- .element: class="fragment" data-fragment-index="1" -->
 * Modelling: number of topics, number of iterations, distribution optimization  <!-- .element: class="fragment" data-fragment-index="2" -->
 * Visualization: aggregation strategy, normalization, choice of visualization  <!-- .element: class="fragment" data-fragment-index="3" -->
 </script>
@@ -848,11 +872,33 @@ bin\mallet train-topics
 
 <section data-markdown>
 <script type="text/template">
+## Summary of what we have covered
+* An idea of what a topic model consists of <!-- .element: class="fragment" data-fragment-index="1" -->
+* An intuition of how topic models are inferred <!-- .element: class="fragment" data-fragment-index="2" -->
+* Some avenues for interpreting and visualizing topic models <!-- .element: class="fragment" data-fragment-index="3" -->
+* The overall workflow required for topic modeling <!-- .element: class="fragment" data-fragment-index="4" -->
+* How to use MALLET for topic modeling <!-- .element: class="fragment" data-fragment-index="5" -->
+</script>
+</section>
+
+<section data-markdown>
+<script type="text/template">
+## A few things not covered here
+* Preprocessing, Postprocessing, Visualization <!-- .element: class="fragment" data-fragment-index="1" -->
+* Implementation details of Gibbs Sampling <!-- .element: class="fragment" data-fragment-index="2" -->
+* Precursors of LDA: LSA, pLSA, NNMF, etc. <!-- .element: class="fragment" data-fragment-index="3" -->
+* Variants of LDA: hierarchical, labeled, dynamic, etc. <!-- .element: class="fragment" data-fragment-index="4" -->
+* Evaluation strategies: human evaluation, external, internal  <!-- .element: class="fragment" data-fragment-index="5" -->
+</script>
+</section>
+
+<section data-markdown>
+<script type="text/template">
 ## Your questions and projects
 * What kind of projects / text collections do you have?
-* What kind of questions do you have?
-* What could topic modeling tell you?
-* What stops you from finding out?
+* What kind of research questions do you have?
+* What do you think topic modeling could tell you?
+* ...
 </script>
 </section>
 
@@ -862,11 +908,18 @@ bin\mallet train-topics
 ## Further Reading: Theory and Tutorials
 <small>
 
+**Introductory articles**
 * Blei, David M. (2012). "Probabilistic topic models". In: _Communications of the ACM_, 55(4): 77–84. <http://www.cs.princeton.edu/~blei/papers/Blei2012.pdf>
 * Steyvers, M. and Griffiths, T. (2006). "Probabilistic Topic Models". In: Landauer, T. et al. (eds), _Latent Semantic Analysis: A Road to Meaning_. Laurence Erlbaum.
+
+**Tutorials**
 * Weingart, Scott (2012). "Topic Modeling for Humanists: A Guided Tour". In: _The Scottbot Irregular_. <http://www.scottbot.net/HIAL/?p=19113>
 * Graham, Shawn, Scott Weingart and Ian Milligan (2012). "Getting Started with Topic Modeling and MALLET". _The Programming Historian_. <http://programminghistorian.org/lessons/topic-modeling-and-mallet>
 * Riddell, Allen. (2014). "TAToM: Text Analysis with Topic Modeling for Humanities Scholars". In: _DARIAH-DE Schulungsmaterialien_. <https://de.dariah.eu/tatom/>
+
+**Video lectures**
+* Jordan Boyd-Graber, "Topic Models", YouTube.com, 2015. <https://www.youtube.com/watch?v=yK7nN3FcgUs>
+* David Blei, "Topic Models", Videolectures.net, 2012, <http://videolectures.net/mlss09uk_blei_tm/>
 
 </small>
 </script>
