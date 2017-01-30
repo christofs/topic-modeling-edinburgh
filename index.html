@@ -172,12 +172,21 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
 
 <section data-markdown>
 <script type="text/template">
+## Dirichlet distributions
+<p><a href="img/dirichlet_plot.png"><img height="500" data-src="img/dirichlet_plot.png"></img></a></p>
+<p>(Describe the topic mixture distributions of the model)<br/>(Here several possible distributions with three words/topics)</p>
+</script>
+</section>
+
+<!--
+<section data-markdown>
+<script type="text/template">
 ## Dirichlet distributions for both
 <p><img height="400" data-src="img/two-dirichlet-distributions.png"></img></p>
 <p>(Describe the topic and word mixture distributions of the model)<br/>(Here two possible distributions with three words/topics)</p>
 </script>
 </section>
-
+-->
 
 
 <section data-markdown>
@@ -294,8 +303,8 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
 * For each topic, we generate a random distribution over words <!-- .element: class="fragment" data-fragment-index="2" -->
 * For each word in each document:  <!-- .element: class="fragment" data-fragment-index="3" -->
     * Sample a topic from the topic distribution
-    * Sample a word from the word distribution of that topic.
-* (Now we have a model; but it's not the one underlying our existing data <!-- .element: class="fragment" data-fragment-index="4" -->
+    * Sample a word from the word distribution of that topic
+* (Now we have a model; but we know it's most likely wrong (=low confidence) <!-- .element: class="fragment" data-fragment-index="4" -->
 </script>
 </section>
 
@@ -305,7 +314,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
 * Using the observed data and our (random/erroneous) model, we can improve the model <!-- .element: class="fragment" data-fragment-index="1" -->
 * One among several methods: Gibbs sampling <!-- .element: class="fragment" data-fragment-index="2" -->
 	* For one word in one document, remove the existing topic assignment <!-- .element: class="fragment" data-fragment-index="3" -->
-    * Based on the model and the other words in the document, assign a new topic to the word <!-- .element: class="fragment" data-fragment-index="4" -->
+    * Based on the model and the other words in the document, assign a new topic to the word (cooccurrence!) <!-- .element: class="fragment" data-fragment-index="4" -->
     * Update the overall model according to this assignment;  <!-- .element: class="fragment" data-fragment-index="5" -->
 * Repeat until your time runs out or your evaluation task says it's ok to stop <!-- .element: class="fragment" data-fragment-index="6" -->
 </script>
@@ -657,7 +666,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
 * Mallet 2.0.8 is installed
     * in `/home/[USER]/Programs/mallet-2.0.8` on Linux
     * or in `C:\Programs\mallet-2.0.8` on Windows
-* A working directory (here: on the Desktop), called "press-en/"
+* A working directory (here: on the Desktop), called "press/"
 * A simple text editor: Geany, Notepadd++, TextEdit 
 * Open text editor and create new file called "run-mallet.txt"
 </script>
@@ -686,7 +695,7 @@ cd C:\Programs\mallet-2.0.8
 <section data-markdown>
 <script type="text/template">
 ## Folder structure
-* /press-en/
+* /press/
    * 1-texts/
    * 2-mallet/
    * 3-derived
