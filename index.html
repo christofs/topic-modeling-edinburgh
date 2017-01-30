@@ -112,7 +112,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
 ## Existing Studies
 * Cameron Blevins: "Topic Modeling Martha Ballard's Diary" (2010): diary <!-- .element: class="fragment" data-fragment-index="1" -->
 * Ted Underwood und Andrew Goldstone (2012): "What can topic models of PMLA teach us...": history of a discipline <!-- .element: class="fragment" data-fragment-index="2" -->
-* Lisa Rhody, "Topic Modeling and Figurative Language" (2012): Poesie <!-- .element: class="fragment" data-fragment-index="3" -->
+* Lisa Rhody, "Topic Modeling and Figurative Language" (2012): ekphrasis in poetry	 <!-- .element: class="fragment" data-fragment-index="3" -->
 * Matthew Jockers, Macroanalysis (2013): novel, nationality, gender <!-- .element: class="fragment" data-fragment-index="4" -->
 * Ben Schmidt: "Typical TV episodes" (2014): TV shows; temporal development <!-- .element: class="fragment" data-fragment-index="5" -->
 * Christof Schöch, "Topic Modeling Genre" (2017): drama, subgenres <!-- .element: class="fragment" data-fragment-index="6" -->
@@ -174,7 +174,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
 <script type="text/template">
 ## Dirichlet distributions
 <p><a href="img/dirichlet_plot.png"><img height="500" data-src="img/dirichlet_plot.png"></img></a></p>
-<p>(Describe the topic mixture distributions of the model)<br/>(Here several possible distributions with three words/topics)</p>
+<p>(Describe the topic mixture distributions of the model)<br/>(Here several possible distributions with three topics)</p>
 </script>
 </section>
 
@@ -243,7 +243,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
 <section data-markdown>
 <script type="text/template">
 ## Bayesian Statistics
->"The computational problem of inferring the hidden topic structure from the documents is the problem of computing the posterior distribution, the conditional distribution of the hidden variables given the documents."
+>"The computational problem of inferring the hidden topic structure from the documents is the problem of computing the posterior distribution, the conditional distribution of the hidden variables, given the documents."
 
 <br/>
 <p>(David Blei, "Probabilistic Topic Models", 2012)</p>
@@ -264,8 +264,8 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
 	* φ (phi) = distribution over words (for each topic)
 	* θ (theta) = distribution over topics (for each document)
 * ...given our observed variables (input data) and parameters
-	* w = the words in each document
-	* α = parameter of the Dirichlet prior for topic per document
+	* w = the data, i.e. the words in each document
+	* α = parameter of the Dirichlet prior for topics per document
 	* β = parameter of the Dirichlet prior for words per topic
 
 </small>
@@ -286,13 +286,13 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
 
 <section data-markdown>
 <script type="text/template">
-## The generative model behing LDA
+## The generative model behind LDA
 * For each topic, there is a distribution over words <!-- .element: class="fragment" data-fragment-index="1" -->
 * For each document, there is a distribution over topics <!-- .element: class="fragment" data-fragment-index="2" -->
 * For each word in each document: <!-- .element: class="fragment" data-fragment-index="3" -->
-    * We sample a topic from the topic distribution of that document.
-    * We sample a word from the word distribution of that topic.
-* (This can only work if we have the distributions; which we don't) <!-- .element: class="fragment" data-fragment-index="4" -->
+    * We sample a topic from the topic distribution of that document
+    * We sample a word from the word distribution of that topic
+* This can only work if we have the distributions; which we don't <!-- .element: class="fragment" data-fragment-index="4" -->
 </script>
 </section>
 
@@ -304,7 +304,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
 * For each word in each document:  <!-- .element: class="fragment" data-fragment-index="3" -->
     * Sample a topic from the topic distribution
     * Sample a word from the word distribution of that topic
-* (Now we have a model; but we know it's most likely wrong (=low confidence) <!-- .element: class="fragment" data-fragment-index="4" -->
+* Now we have a model; but we know it's most likely wrong (=low confidence) <!-- .element: class="fragment" data-fragment-index="4" -->
 </script>
 </section>
 
@@ -589,7 +589,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
 <section data-markdown>
 <script type="text/template">
 ## PCA based on topic scores (subgenres)
-<img height="500" data-src="img/topic-pca.png"></img>
+<a href="img/topic-pca.png"><img height="500" data-src="img/topic-pca.png"></a></img>
 </script>
 </section>
 
@@ -637,7 +637,6 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
 * Postprocessing and visualisation is done elsewhere (eg., with tmw)
 * Mallet imports texts and builds the topic model (and does it really well)
 * Attention! Mallet is operated from the command line
-* Find help: <http://mallet.cs.umass.edu/topics.php>
 </script>
 </section>
 
@@ -665,7 +664,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
 ## Mallet: prerequisites
 * Mallet 2.0.8 is installed
     * in `/home/[USER]/Programs/mallet-2.0.8` on Linux
-    * or in `C:\Programs\mallet-2.0.8` on Windows
+    * or in `C:\mallet-2.0.8` on Windows
 * A working directory (here: on the Desktop), called "press/"
 * A simple text editor: Geany, Notepadd++, TextEdit 
 * Open text editor and create new file called "run-mallet.txt"
@@ -676,7 +675,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
 <section data-markdown>
 <script type="text/template">
 ## Testing Mallet
-(using the Linux Terminal; from "/home/[USER]")
+(using the Linux Terminal; from "/home/[USER]/")
 ```
 cd ~/Programs/mallet-2.0.8/
 ./bin/mallet
@@ -684,7 +683,7 @@ cd ~/Programs/mallet-2.0.8/
 <br/>
 (using the Windows CMD; from "C:")
 ```
-cd C:\Programs\mallet-2.0.8
+cd C:\mallet-2.0.8
 .\bin\mallet
 ```
 (List of commands should show up.)
@@ -756,7 +755,7 @@ cd C:\Programs\mallet-2.0.8
 <section data-markdown>
 <script type="text/template">
 ## Importing texts into Mallet (Windows)
-(using the `cmd` Terminal; from `C:\Programs\mallet-2.0.8\`)
+(using the `cmd` Terminal; from "mallet-2.0.8" folder)
 ```
 bin\mallet import-dir 
 --input C:\Users\[USER]\Desktop\press\1-texts 
@@ -787,7 +786,7 @@ bin\mallet import-dir
 <section data-markdown>
 <script type="text/template">
 ## (2) Build the topic model (Linux)
-<p>(from "mallet-2.0.8/")</p>
+<p>(from "mallet-2.0.8/" folder)</p>
 ```
 ./bin/mallet train-topics  
 --input ~/Desktop/press/2-mallet/press.mallet 
@@ -804,7 +803,7 @@ bin\mallet import-dir
 <section data-markdown>
 <script type="text/template">
 ## (2) Build the topic model (Windows)
-<p>(from `C:\Programs\mallet-2.0.8\`)</p>
+<p>(from "mallet-2.0.8" folder)</p>
 ```
 bin\mallet train-topics 
 --input C:\\Users\[USER]\Desktop\press\2-mallet\press.mallet 
